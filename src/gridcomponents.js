@@ -61,8 +61,9 @@ export function GridComponents(props) {
     const [droppedBoxNames, setDroppedBoxNames] = useState([])
     const [dropComponent, setDropComponent] = useState(initSetDropComponent)
     
-    const style1 = currentComponentList.rowStyle
-    const style2 = currentComponentList.componentStyle
+    const stylRow = currentComponentList.rowStyle
+    const styleCol = currentComponentList.colStyle
+    const styleComp = currentComponentList.componentStyle
     
     let rows = []
     let cols = []
@@ -78,7 +79,7 @@ export function GridComponents(props) {
             }            
             cols = []
             rows.push(
-                <Row gutter={16} style={style1}>
+                <Row gutter={[16,16]} style={stylRow}>
                     {createCol(i, currentComponentList.colCount[i], colCounts)}
                     {cols}
                 </Row>
@@ -89,9 +90,12 @@ export function GridComponents(props) {
     const createCol = (i, colCount, colCounts) => {
         for(let j = 0; j < colCount; j++){
             components = []
+            const component = getComponent(i+1, j+1)
+            if(component.show === false) return
+
             cols.push(
-                <Col key={j.toString()} span={24 / colCounts}>
-                    {createComponent(i, j)}
+                <Col key={j.toString()} span={24 / colCounts} style={styleCol}>
+                    {createComponent(component)}
                     {components}
                 </Col>
             )
@@ -102,13 +106,11 @@ export function GridComponents(props) {
         return currentComponentList.data.find((data)=>data.row === row && data.column === column)
     }
 
-    const createComponent = (row, column) => {
-        const component = getComponent(row+1, column+1)
-        if(component.show === false) return
+    const createComponent = (component) => {
         components.push(
             <ComponentDrop 
                 component={component} 
-                compstyle={style2} 
+                compstyle={styleComp} 
                 accept={dropComponent[component.index].accepts}
                 lastDroppedItem={dropComponent[component.index].lastDroppedItem}
                 onDrop={(item) => handleDrop(component.index, item)}
@@ -116,6 +118,21 @@ export function GridComponents(props) {
             />
         )               
     }
+
+    // const createComponent = (row, column) => {
+    //     const component = getComponent(row+1, column+1)
+    //     if(component.show === false) return
+    //     components.push(
+    //         <ComponentDrop 
+    //             component={component} 
+    //             compstyle={styleComp} 
+    //             accept={dropComponent[component.index].accepts}
+    //             lastDroppedItem={dropComponent[component.index].lastDroppedItem}
+    //             onDrop={(item) => handleDrop(component.index, item)}
+    //             key={component.index}
+    //         />
+    //     )               
+    // }
 
     function isDropped(boxName) {
         return droppedBoxNames.indexOf(boxName) > -1
@@ -211,7 +228,9 @@ export function GridComponents(props) {
             </Space>
         </div>
         <DndProvider backend={HTML5Backend}>
-            {componentsBox}      
+            <div style={stylRow}>
+                {componentsBox}      
+            </div>
             <div style={{ overflow: 'hidden', clear: 'both' }}>
                 {rows}            
             </div>

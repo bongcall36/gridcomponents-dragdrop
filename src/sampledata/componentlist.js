@@ -3,8 +3,9 @@ export const componentList = {
     rowCount:3,
     colCount: [3, 1, 3],
     colResize: true,
-    rowStyle: {padding: '8px 8px 8px 8px'},
-    componentStyle: {background: '#0092ff', padding: '8px 8px', height: '10em'},
+    rowStyle: {padding: '8px 8px 8px 8px', margin: '0 0 0 0'},
+    colStyle: {borderStyle: 'dotted', borderWidth: '1px', borderColor: '#000000'},
+    componentStyle: {background: '#ffffff', padding: '8px 8px', height: 'calc(100% - 16px)'},
     data:[
         {
             component: 'component1',

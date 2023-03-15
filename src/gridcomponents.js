@@ -30,7 +30,10 @@ export function GridComponents(props) {
             return tempComponentList
         }            
     }
-
+    // local Storage에 삭제
+    const removeLocalStorage = (componentList) => {
+        localStorage.removeItem('ComponentList')
+    }
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentComponentList, setComponentList] = useState(readLocalStorage);
     const [originComponentList, setOriginComponentList] = useState();
@@ -189,15 +192,22 @@ export function GridComponents(props) {
         setDropComponent(initSetDropComponent)
     }
 
+    const onInit = () => {
+        onCancel()
+        removeLocalStorage()
+        setComponentList(readLocalStorage)
+    }
+
     createGrid()
     createComponentsBox()
     return(
         <>
         <div style={{textAlign:'right', margin: '8px 8px 0 0'}}>
-            <Space direction="horizontal" align="end" style={{ width: '230px'}}>
+            <Space direction="horizontal" align="end" style={{ width: '290px'}}>
                 <Button type="primary" block onClick={showModal}>Setting</Button>
                 <Button type="primary" block onClick={onSave}>Save</Button>
-                <Button type="primary" block onClick={onCancel}>Init</Button>
+                <Button type="primary" block onClick={onCancel}>Cancel</Button>
+                <Button type="primary" block onClick={onInit}>Init</Button>
             </Space>
         </div>
         <DndProvider backend={HTML5Backend}>

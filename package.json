@@ -1,0 +1,22 @@
+{
+  "name": "parcelDefault",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^2.8.3",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "antd": "^5.2.2",
+    "immutability-helper": "^3.1.1",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.2.0"
+  },
+  "scripts": {
+    "start": "rimraf dist && parcel public/index.html --open",
+    "build": "rimraf dist && parcel build public/index.html --dist-dir dist"
+  }
+}

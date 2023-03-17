@@ -146,9 +146,10 @@ export function GridComponents(props) {
 
     const createComponentsBox = () => {        
         currentComponentList.data.forEach((component) =>{
-            if(component.type === 'pdf'){ 
-                component.code.props.pdfRef = newFunction(component.codevparams.pdfRef)()
-                // component.code.props.pdfRef = eval(component.codevparams.pdfRef) 
+            if(component.codevparams !== undefined){                 
+                for (const [key, value] of Object.entries(component.codevparams)) {
+                    component.code.props[key] = newFunction(value)()
+                }
             }
             componentsBox.push(
                 <Box component={component} type={component.droptype} isDropped={isDropped(component.component)} key={component.index}/>

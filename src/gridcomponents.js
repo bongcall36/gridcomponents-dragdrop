@@ -1,4 +1,4 @@
-import React, {useState, useEffect, memo, useCallback} from 'react';
+import React, {useState, useEffect, memo, useCallback, useRef} from 'react';
 import { Col, Row, Space, Button, Radio, Card, Modal, Switch } from 'antd';
 import _ from 'lodash'
 import { DndProvider } from 'react-dnd'
@@ -6,7 +6,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import update from 'immutability-helper'
 import { Box } from './box'
 import { ComponentDrop } from './componentdrop'
-
 
 export function GridComponents(props) {
 
@@ -60,6 +59,13 @@ export function GridComponents(props) {
     const [dragBox, setDragBox] = useState(initSetDragBox)
     const [droppedBoxNames, setDroppedBoxNames] = useState([])
     const [dropComponent, setDropComponent] = useState(initSetDropComponent)
+    // new Function 에서 사용하기 위해서는 전역 변수로 정의 되어야 한다
+    ref = useRef()
+
+    function newFunction(param){
+        let newFfunc = new Function("return " + param)
+        return newFfunc 
+    }
     
     const stylRow = currentComponentList.rowStyle
     const styleCol = currentComponentList.colStyle
@@ -69,7 +75,7 @@ export function GridComponents(props) {
     let cols = []
     let components = []
     let componentsBox = []
-    
+
     const createGrid = () => {
         for(let i = 0; i < currentComponentList.rowCount; i++){
             let colCounts = currentComponentList.colCount[i]
@@ -138,12 +144,16 @@ export function GridComponents(props) {
         return droppedBoxNames.indexOf(boxName) > -1
     }
 
-    const createComponentsBox = () => {          
-        currentComponentList.data.forEach((component) =>
+    const createComponentsBox = () => {        
+        currentComponentList.data.forEach((component) =>{
+            if(component.type === 'pdf'){ 
+                component.code.props.pdfRef = newFunction(component.codevparams.pdfRef)()
+                // component.code.props.pdfRef = eval(component.codevparams.pdfRef) 
+            }
             componentsBox.push(
                 <Box component={component} type={component.droptype} isDropped={isDropped(component.component)} key={component.index}/>
             )
-        )
+        })
     }
 
     const handleDrop = useCallback(
@@ -220,18 +230,18 @@ export function GridComponents(props) {
     return(
         <>
         <div style={{textAlign:'right', margin: '8px 8px 0 0'}}>
-            <Space direction="horizontal" align="end" style={{ width: '290px'}}>
+            <Space direction="horizontal" align="end" >
                 <Button type="primary" block onClick={showModal}>Setting</Button>
                 <Button type="primary" block onClick={onSave}>Save</Button>
                 <Button type="primary" block onClick={onCancel}>Cancel</Button>
-                <Button type="primary" block onClick={onInit}>Init</Button>
+                <Button type="primary" block onClick={onInit}>Init</Button>               
             </Space>
         </div>
         <DndProvider backend={HTML5Backend}>
             <div style={stylRow}>
                 {componentsBox}      
             </div>
-            <div style={{ overflow: 'hidden', clear: 'both' }}>
+            <div ref={ref} style={{ overflow: 'hidden', clear: 'both' }}>
                 {rows}            
             </div>
         </DndProvider>

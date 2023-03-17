@@ -1,11 +1,13 @@
 import { Col, Row, Space, Button, Radio, Card, Modal, Switch } from 'antd';
+import { UiPdfButton } from '../pdfbutton';
+
 export const componentList = {
     rowCount:3,
     colCount: [3, 1, 3],
     colResize: true,
     rowStyle: {padding: '8px 8px 8px 8px', margin: '0 0 0 0'},
     colStyle: {borderStyle: 'dotted', borderWidth: '1px', borderColor: '#000000'},
-    componentStyle: {background: '#ffffff', padding: '8px 8px', height: 'calc(100% - 16px)'},
+    componentStyle: {padding: '8px 8px', height: 'calc(100% - 16px)'},
     data:[
         {
             component: 'component1',
@@ -15,8 +17,7 @@ export const componentList = {
             row: 1,
             column: 1,
             index: 0, 
-            droptype: 'component',
-            drop: false,              
+            droptype: 'component'
         },
         {
             component: 'component2',
@@ -27,8 +28,7 @@ export const componentList = {
             row: 1,
             column: 2,
             index: 1, 
-            droptype: 'component',
-            drop: false  
+            droptype: 'component'
         },
         {
             component: 'component3',
@@ -43,8 +43,7 @@ export const componentList = {
             row: 1,
             column: 3,
             index: 2, 
-            droptype: 'component',
-            drop: false  
+            droptype: 'component'
         },
         {
             component: 'component4',
@@ -54,9 +53,7 @@ export const componentList = {
             row: 2,
             column: 1,
             index: 3, 
-            droptype: 'component',
-            drop: false  
-
+            droptype: 'component'
         },
         {
             component: 'component5',
@@ -66,9 +63,7 @@ export const componentList = {
             row: 3,
             column: 1,
             index: 4, 
-            droptype: 'component',
-            drop: false  
-
+            droptype: 'component'
         },
         {
             component: 'component6',
@@ -78,9 +73,7 @@ export const componentList = {
             row: 3,
             column: 2,
             index: 5, 
-            droptype: 'component',
-            drop: false  
-
+            droptype: 'component' 
         },
         {
             component: 'component7',
@@ -95,8 +88,17 @@ export const componentList = {
             row: 3,
             column: 3,
             index: 6, 
-            droptype: 'component',
-            drop: false  
-
-        }
+            droptype: 'component'
+        },
+        {
+            component: 'component8',
+            type: 'pdf',
+            code: <UiPdfButton pdfRef={null} pdfSavefile={'test-pdf-example.pdf'}/>,
+            codevparams: {pdfRef: 'ref'},
+            show: true,
+            row: 4,
+            column: 1,
+            index: 7, 
+            droptype: 'component' 
+        }      
 ]}

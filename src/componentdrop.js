@@ -15,8 +15,19 @@ export const ComponentDrop = memo(function ComponentDrop({component, compstyle, 
 
   const isActive = canDrop && isOver
   
+  const selectBackgroundColor = (isActive, canDrop) => {
+    if (isActive) {
+      return '#f0f8ff'
+    } else if (canDrop) {
+      return '#faebd7'
+    } else {
+      return '#ffffff'
+    }
+  }
+  const backgroundcolor = selectBackgroundColor(isActive, canDrop) 
+  
   return (
-    <div ref={drop} style={compstyle} data-testid="col">
+    <div ref={drop} style={{...compstyle, backgroundColor: backgroundcolor}} data-testid="col">
       {lastDroppedItem ? lastDroppedItem.component.code : component.code}              
     </div>
   )

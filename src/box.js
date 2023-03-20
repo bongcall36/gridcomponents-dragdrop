@@ -14,7 +14,7 @@ export const Box = memo(function Box({ component, type, isDropped }) {
   
   return (
     <>
-    <div ref={drag} style={{borderStyle: 'dotted', borderWidth: '1px 1px 1px 1px', borderColor: 'gray', padding: '0.5rem 1rem', float:'left', width: '170px', height: '150px', opacity }} data-testid="box">
+    <div ref={drag} style={{borderStyle: 'dotted', borderWidth: '1px 1px 1px 1px', borderColor: 'gray', background: '#ffffff', padding: '0.5rem 1rem', float:'left', width: '170px', height: '150px', opacity }} data-testid="box">
       {isDropped ? <s>{component.component}</s> : component.component}
       <div ref={dragPreview} style={{width: '160px', marginLeft: '-10em', transform: 'scale(0.5,0.5)', transformOrigin: '330px 50px', float: 'left'}}>
         {component.code}

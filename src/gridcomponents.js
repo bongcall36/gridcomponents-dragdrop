@@ -259,8 +259,8 @@ export function GridComponents(props) {
     createComponentsBox()
     if(option === 0){
         return(
-            <>
-                <div style={{textAlign:'right', margin: '8px 8px 0 0'}}>
+            <div style={{background: '#f5f5f5'}}>
+                <div style={{textAlign:'right', margin: '8px 8px 0 0', background: '#ffffff'}}>
                     <Space direction="horizontal" align="end" >
                         <Button type="primary" block onClick={showModal}>Setting</Button>
                         <Button type="primary" block onClick={onSave}>Save</Button>
@@ -269,7 +269,7 @@ export function GridComponents(props) {
                     </Space>
                 </div>
                 <DndProvider backend={HTML5Backend}>
-                    <div style={stylRow}>
+                    <div style={{...stylRow, overflow:'auto', background: '#ffffff'}}>
                         {componentsBox}      
                     </div>
                     <div ref={ref} style={{ overflow: 'hidden', clear: 'both' }}>
@@ -281,7 +281,7 @@ export function GridComponents(props) {
                         <p> {component.component} <Switch style={{float:'right'}} checked={component.show} onChange={onChange(component)} /></p>
                     ) : null}
                 </Modal>
-            </>
+            </div>
         )
     }
     else{

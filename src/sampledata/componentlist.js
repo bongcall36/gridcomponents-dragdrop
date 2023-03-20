@@ -2,8 +2,8 @@ import { Col, Row, Space, Button, Radio, Card, Modal, Switch } from 'antd';
 import { UiPdfButton } from '../pdfbutton';
 
 export const componentList = {
-    option:1,
-    rowCount:3,
+    option: 1,
+    rowCount: 3,
     colCount: [3, 1, 3],
     colResize: true,
     rowStyle: {padding: '8px 8px 8px 8px', margin: '0 0 0 0'},

@@ -259,7 +259,7 @@ export function GridComponents(props) {
     createComponentsBox()
     if(option === 0){
         return(
-            <div style={{background: '#f5f5f5'}}>
+            <div style={{background: '#f5f5f5', height:'100vh'}}>
                 <div style={{textAlign:'right', margin: '8px 8px 0 0', background: '#ffffff'}}>
                     <Space direction="horizontal" align="end" >
                         <Button type="primary" block onClick={showModal}>Setting</Button>

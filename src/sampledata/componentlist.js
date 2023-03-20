@@ -2,13 +2,14 @@ import { Col, Row, Space, Button, Radio, Card, Modal, Switch } from 'antd';
 import { UiPdfButton } from '../pdfbutton';
 
 export const componentList = {
-    option: 0,
+    option: 1,
     rowCount: 3,
     colCount: [3, 1, 3],
     colResize: true,
     rowStyle: {padding: '8px 8px 8px 8px', margin: '0 0 0 0'},
     colStyle: {borderStyle: 'dotted', borderWidth: '1px', borderColor: '#000000'},
-    componentStyle: {padding: '8px 8px', height: 'calc(100% - 16px)'},
+    componentStyle0: {padding: '8px 8px 8px 8px', height: 'calc(100% - 16px)'},
+    componentStyle1: {padding: '8px 8px 8px 8px', height: '100%'},
     data:[
         {
             component: 'component1',

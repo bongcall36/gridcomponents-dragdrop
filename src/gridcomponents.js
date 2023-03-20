@@ -1,5 +1,5 @@
 import React, {useState, useEffect, memo, useCallback, useRef} from 'react';
-import { Col, Row, Space, Button, Radio, Card, Modal, Switch, FloatButton, Layout } from 'antd';
+import { Col, Row, Space, Button, Radio, Card, Modal, Switch, Layout } from 'antd';
 import _ from 'lodash'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -12,7 +12,6 @@ const { Header, Footer, Sider, Content } = Layout;
 export function GridComponents(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalEdit, setModalEdit] = useState(false)
-    const [open, setOpen] = useState(false)
 
     // new Function 에서 사용하기 위해서는 전역 변수로 정의 되어야 한다
     ref = useRef()
@@ -101,11 +100,10 @@ export function GridComponents(props) {
         let newFfunc = new Function("return " + param)
         return newFfunc 
     }
-    
+    const option = currentComponentList.option    
     const stylRow = currentComponentList.rowStyle
     const styleCol = currentComponentList.colStyle
-    const styleComp = currentComponentList.componentStyle
-    const option = currentComponentList.option
+    const styleComp = (option === 0) ? currentComponentList.componentStyle0: currentComponentList.componentStyle1
     
     let rows = []
     let cols = []
@@ -213,14 +211,6 @@ export function GridComponents(props) {
         findComponent.show = checked
     }
 
-    const showDrawer = () => {
-        setOpen(true)
-      }
-    
-      const closeDrawer = () => {
-        setOpen(false)
-    }
-
     const onSave = () => {
         const dropItems = dropComponent.map((component) => {
             if(component.lastDroppedItem !== null)
@@ -300,11 +290,9 @@ export function GridComponents(props) {
                             <Button type="primary" block onClick={onInit}>Init</Button>               
                         </Space>
                     </div>
-
-                        <FloatButton type='primary' onClick={showDrawer} />            
-                        <div ref={ref} style={{ overflow: 'hidden', clear: 'both' }}>
-                            {rows}            
-                        </div>
+                    <div ref={ref} style={{ overflow: 'hidden', clear: 'both' }}>
+                        {rows}            
+                    </div>
                 </Content>
                 </DndProvider>
                 <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{transform: 'translate(700px, -50px)'}}>

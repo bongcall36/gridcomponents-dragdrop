@@ -16,7 +16,7 @@ export function GridComponents(props) {
     const [isDragOpen, setDragOpen] = useState(false)
 
     // new Function 에서 사용하기 위해서는 전역 변수로 정의 되어야 한다
-    ref = useRef()
+    window.ref = useRef()
 
     const createComponentsProps = (component) => {        
         if(component.codevparams !== undefined){                 

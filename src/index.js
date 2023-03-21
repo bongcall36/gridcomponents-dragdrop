@@ -7,6 +7,6 @@ import {componentList} from './sampledata/componentlist'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
-	 	<GridComponents componentList={componentList} option={1}/>
+	 	<GridComponents componentList={componentList}/>
 	</React.StrictMode>
 );

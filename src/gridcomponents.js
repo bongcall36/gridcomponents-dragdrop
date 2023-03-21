@@ -133,7 +133,7 @@ export function GridComponents(props) {
         for(let j = 0; j < colCount; j++){
             components = []
             const component = getComponent(i+1, j+1)
-            if(component.show === false) return
+            if(component.show === false) continue
 
             cols.push(
                 <Col key={j.toString()} span={24 / colCounts} style={styleCol}>

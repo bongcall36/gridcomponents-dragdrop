@@ -287,7 +287,7 @@ export function GridComponents(props) {
                         {rows}            
                     </div>
                 </DndProvider>
-                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{transform: 'translate(700px, -50px)'}}>
+                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{opacity: '0.7'}}>
                     {currentComponentList.data !== undefined ? currentComponentList.data.map((component) => 
                         <p> {component.component} <Switch style={{float:'right'}} checked={component.show} onChange={onChange(component)} /></p>
                     ) : null}
@@ -333,7 +333,7 @@ export function GridComponents(props) {
                     </div>
                 </Content>
                 </DndProvider>
-                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{transform: 'translate(-650px, -45px)'}}>
+                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{opacity: '0.7'}}>
                     {currentComponentList.data !== undefined ? currentComponentList.data.map((component) => 
                         <p> {component.component} <Switch style={{float:'right'}} checked={component.show} onChange={onChange(component)} /></p>
                     ) : null}

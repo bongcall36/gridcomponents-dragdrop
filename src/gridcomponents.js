@@ -106,6 +106,13 @@ export function GridComponents(props) {
     const stylRow = currentComponentList.rowStyle
     const styleCol = currentComponentList.colStyle
     const styleComp = (option === 0) ? currentComponentList.componentStyle0: currentComponentList.componentStyle1
+
+    const bDragShow = currentComponentList.fButton[0]
+    const bComponentShowSet = currentComponentList.fButton[1]
+    const bSave = currentComponentList.fButton[2]
+    const bCancel = currentComponentList.fButton[3]
+    const bInit = currentComponentList.fButton[4]
+
     
     let rows = []
     let cols = []
@@ -251,6 +258,33 @@ export function GridComponents(props) {
         setComponentList(readLocalStorage)
     }
 
+    function setFunctionButton(){
+        return(
+            <>
+                {bComponentShowSet ? (
+                    <Tooltip title="Setting">
+                        <Button type="primary" icon={<SettingOutlined />} onClick={showModal} />
+                    </Tooltip>
+                ) : (null)}
+                {bSave ? (
+                    <Tooltip title="Save">
+                        <Button type="primary" icon={<SaveOutlined />} onClick={onSave}></Button>
+                    </Tooltip>
+                ) : (null)}
+                {bCancel? (
+                    <Tooltip title="Cancel">
+                        <Button type="primary" icon={<RollbackOutlined />} onClick={onCancel}></Button>
+                    </Tooltip>
+                ) : (null)}
+                {bInit ? (
+                    <Tooltip title="Init">
+                        <Button type="primary" icon={<ReloadOutlined />} onClick={onInit}></Button>  
+                    </Tooltip>
+                ) : (null)}
+            </>   
+        )
+    }
+
     createGrid()
     createComponentsBox()
     if(option === 0){
@@ -258,23 +292,12 @@ export function GridComponents(props) {
             <div style={{background: '#f5f5f5', height: 'calc(100vh - 10px)'}}>
                 <div style={{textAlign:'right', margin: '8px 8px 0 0', background: '#ffffff'}}>
                     <Space direction="horizontal" align="end" >
-                        <Button type="primary" icon={ isDragOpen ? <UpSquareOutlined /> : <DownSquareOutlined />} onClick={showDrag} />
-                        {isDragOpen ? (
-                            <>
-                                <Tooltip title="Setting">
-                                    <Button type="primary" icon={<SettingOutlined />} onClick={showModal} />
-                                </Tooltip>
-                                <Tooltip title="Save">
-                                    <Button type="primary" icon={<SaveOutlined />} onClick={onSave}></Button>
-                                </Tooltip>
-                                <Tooltip title="Cancel">
-                                    <Button type="primary" icon={<RollbackOutlined />} onClick={onCancel}></Button>
-                                </Tooltip>
-                                <Tooltip title="Init">
-                                    <Button type="primary" icon={<ReloadOutlined />} onClick={onInit}></Button>  
-                                </Tooltip>
-                            </>                                                                 
-                        ) : (null)}         
+                        {bDragShow ? (
+                        <Button type="primary" icon={ isDragOpen ? <UpSquareOutlined /> : <DownSquareOutlined />} onClick={showDrag} />) 
+                        : (setFunctionButton())}
+                        {isDragOpen ? 
+                        (setFunctionButton())
+                        : (null)}         
                     </Space>
                 </div>
                 <DndProvider backend={HTML5Backend}>
@@ -301,23 +324,12 @@ export function GridComponents(props) {
                 <DndProvider backend={HTML5Backend}>
                     <Space direction="vertical" >
                         <Space direction="horizontal" style={{margin: '8px 8px 0 8px'}}>  
-                            <Button type="primary" icon={ isDragOpen ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />} onClick={showDrag} />
-                            {isDragOpen ? (
-                                <>
-                                    <Tooltip title="Setting">
-                                        <Button type="primary" icon={<SettingOutlined />} onClick={showModal} />
-                                    </Tooltip>
-                                    <Tooltip title="Save">
-                                        <Button type="primary" icon={<SaveOutlined />} onClick={onSave}></Button>
-                                    </Tooltip>
-                                    <Tooltip title="Cancel">
-                                        <Button type="primary" icon={<RollbackOutlined />} onClick={onCancel}></Button>
-                                    </Tooltip>
-                                    <Tooltip title="Init">
-                                        <Button type="primary" icon={<ReloadOutlined />} onClick={onInit}></Button>  
-                                    </Tooltip>
-                                </>                                                                 
-                            ) : (null)}
+                            {bDragShow ? ( 
+                            <Button type="primary" icon={ isDragOpen ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />} onClick={showDrag} />) 
+                            : (setFunctionButton())}
+                            {isDragOpen ? 
+                            (setFunctionButton())
+                            : (null)}
                         </Space>
                         {isDragOpen ? (
                             <Space direction="vertical">

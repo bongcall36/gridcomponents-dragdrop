@@ -97,7 +97,7 @@ export const componentList = {
             component: 'component8',
             type: 'pdf',
             code: <UiPdfButton pdfRef={null} pdfSavefile={'test-pdf-example.pdf'}/>,
-            codevparams: {pdfRef: 'ref'},
+            codevparams: {pdfRef: 'ref'}, //key=code의 elem, value=code의 elec의 값
             show: true,
             row: 4,
             column: 1,

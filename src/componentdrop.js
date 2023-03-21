@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { useDrop } from 'react-dnd'
-import { ItemTypes } from './ItemTypes.js'
+import { ItemTypes } from './itemtypes.js'
 
 export const ComponentDrop = memo(function ComponentDrop({component, compstyle, accept, lastDroppedItem, onDrop}){
   //if(component.show === false) return

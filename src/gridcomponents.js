@@ -1,5 +1,6 @@
 import React, {useState, useEffect, memo, useCallback, useRef} from 'react';
-import { Col, Row, Space, Button, Radio, Card, Modal, Switch, Layout } from 'antd';
+import { Col, Row, Space, Button, Radio, Card, Modal, Switch, Layout, Tooltip } from 'antd';
+import { MenuFoldOutlined, MenuUnfoldOutlined, SettingOutlined, SaveOutlined, RollbackOutlined, ReloadOutlined, UpSquareOutlined, DownSquareOutlined } from '@ant-design/icons';
 import _ from 'lodash'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -12,6 +13,7 @@ const { Header, Footer, Sider, Content } = Layout;
 export function GridComponents(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalEdit, setModalEdit] = useState(false)
+    const [isDragOpen, setDragOpen] = useState(false)
 
     // new Function 에서 사용하기 위해서는 전역 변수로 정의 되어야 한다
     ref = useRef()
@@ -191,6 +193,10 @@ export function GridComponents(props) {
         [droppedBoxNames, dropComponent],
     )
 
+    const showDrag = () => {
+        setDragOpen(!isDragOpen);
+    }
+
     const showModal = () => {
         setIsModalOpen(true);
         setOriginComponentList(_.cloneDeep(currentComponentList))
@@ -249,19 +255,34 @@ export function GridComponents(props) {
     createComponentsBox()
     if(option === 0){
         return(
-            <div style={{background: '#f5f5f5', height:'100vh'}}>
+            <div style={{background: '#f5f5f5', height: 'calc(100vh - 10px)'}}>
                 <div style={{textAlign:'right', margin: '8px 8px 0 0', background: '#ffffff'}}>
                     <Space direction="horizontal" align="end" >
-                        <Button type="primary" block onClick={showModal}>Setting</Button>
-                        <Button type="primary" block onClick={onSave}>Save</Button>
-                        <Button type="primary" block onClick={onCancel}>Cancel</Button>
-                        <Button type="primary" block onClick={onInit}>Init</Button>               
+                        <Button type="primary" icon={ isDragOpen ? <UpSquareOutlined /> : <DownSquareOutlined />} onClick={showDrag} />
+                        {isDragOpen ? (
+                            <>
+                                <Tooltip title="Setting">
+                                    <Button type="primary" icon={<SettingOutlined />} onClick={showModal} />
+                                </Tooltip>
+                                <Tooltip title="Save">
+                                    <Button type="primary" icon={<SaveOutlined />} onClick={onSave}></Button>
+                                </Tooltip>
+                                <Tooltip title="Cancel">
+                                    <Button type="primary" icon={<RollbackOutlined />} onClick={onCancel}></Button>
+                                </Tooltip>
+                                <Tooltip title="Init">
+                                    <Button type="primary" icon={<ReloadOutlined />} onClick={onInit}></Button>  
+                                </Tooltip>
+                            </>                                                                 
+                        ) : (null)}         
                     </Space>
                 </div>
                 <DndProvider backend={HTML5Backend}>
-                    <div style={{...stylRow, overflow:'auto', background: '#ffffff'}}>
-                        {componentsBox}      
-                    </div>
+                    {isDragOpen ? (
+                        <div style={{...stylRow, overflow:'auto', background: '#ffffff'}}>
+                            {componentsBox}      
+                        </div>
+                    ) : (null)}
                     <div ref={ref} style={{ overflow: 'hidden', clear: 'both' }}>
                         {rows}            
                     </div>
@@ -278,24 +299,41 @@ export function GridComponents(props) {
         return(
             <Layout>
                 <DndProvider backend={HTML5Backend}>
-                <Sider  style={{...stylRow, overflow: 'auto', height:'100vh', background: '#ffffff'}}>
-                    {componentsBox}      
-                </Sider >  
-                <Content>     
-                    <div style={{textAlign:'right', margin: '8px 8px 0 0'}}>
-                        <Space direction="horizontal" align="end" >
-                            <Button type="primary" block onClick={showModal}>Setting</Button>
-                            <Button type="primary" block onClick={onSave}>Save</Button>
-                            <Button type="primary" block onClick={onCancel}>Cancel</Button>
-                            <Button type="primary" block onClick={onInit}>Init</Button>               
+                    <Space direction="vertical" >
+                        <Space direction="horizontal" style={{margin: '8px 8px 0 8px'}}>  
+                            <Button type="primary" icon={ isDragOpen ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />} onClick={showDrag} />
+                            {isDragOpen ? (
+                                <>
+                                    <Tooltip title="Setting">
+                                        <Button type="primary" icon={<SettingOutlined />} onClick={showModal} />
+                                    </Tooltip>
+                                    <Tooltip title="Save">
+                                        <Button type="primary" icon={<SaveOutlined />} onClick={onSave}></Button>
+                                    </Tooltip>
+                                    <Tooltip title="Cancel">
+                                        <Button type="primary" icon={<RollbackOutlined />} onClick={onCancel}></Button>
+                                    </Tooltip>
+                                    <Tooltip title="Init">
+                                        <Button type="primary" icon={<ReloadOutlined />} onClick={onInit}></Button>  
+                                    </Tooltip>
+                                </>                                                                 
+                            ) : (null)}
                         </Space>
-                    </div>
+                        {isDragOpen ? (
+                            <Space direction="vertical">
+                                <Sider  style={{...stylRow, overflow: 'auto', height: 'calc(100vh - 52px)', background: '#ffffff'}}>
+                                    {componentsBox}   
+                                </Sider >
+                                </Space>                            
+                        ) : (null)}  
+                    </Space>  
+                <Content>     
                     <div ref={ref} style={{ overflow: 'hidden', clear: 'both' }}>
                         {rows}            
                     </div>
                 </Content>
                 </DndProvider>
-                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{transform: 'translate(700px, -50px)'}}>
+                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{transform: 'translate(-650px, -45px)'}}>
                     {currentComponentList.data !== undefined ? currentComponentList.data.map((component) => 
                         <p> {component.component} <Switch style={{float:'right'}} checked={component.show} onChange={onChange(component)} /></p>
                     ) : null}
